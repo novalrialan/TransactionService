@@ -1,33 +1,37 @@
-package com.transaction.dev;
+package model;
 
-import javax.persistence.*;
+
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "orders") // "order" is a reserved word in SQL, so we use "orders"
+
+
+
+
+
+@Data
+@Document(collection = "orders")// "order" is a reserved word in SQL, so we use "orders"
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
     private Date orderDate;
     private Double totalAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+  
+    @DBRef
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @DBRef
     private List<OrderItem> orderItems;
 
     // Getters and setters

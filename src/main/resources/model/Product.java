@@ -1,25 +1,30 @@
-package com.transaction.dev;
+package model;
 
-import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+
+@Data
+@Document(collection = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
     private String name;
     private String description;
     private Double price;
     private Integer stock;
+
+ 
 
     // Getters and setters
 }

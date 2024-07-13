@@ -1,27 +1,28 @@
-package com.transaction.dev;
+package model;
 
-import javax.persistence.*;
-
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Entity
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+
+
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Document(collection = "customers")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
     private String name;
     private String email;
     private String phone;
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @DBRef
     private List<Order> orders;
 
     // Getters and setters

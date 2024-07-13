@@ -1,3 +1,6 @@
+package com.transaction.dev.dto;
+import java.util.List;
+
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 
 import lombok.Getter;
@@ -25,7 +28,7 @@ public class CustomerDTO {
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.orderDto = orderDto;
+        // this.orderDto = orderDto();
     }
 
     
