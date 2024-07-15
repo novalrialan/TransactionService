@@ -17,7 +17,7 @@ public interface ProductService {
     
     public List<ProductDTO> getProducts();
 
-    public ProductDTO getSingleProduct(String id)throws ProductCollectionException;
+    public ProductDTO getSingleProduct(String id) throws ProductCollectionException;
 
-    public ProductDTO updateProductId(String id, ProductDTO productDTO);
+    public void updateProductId(String id, ProductDTO productDTO) throws ProductCollectionException;
 }

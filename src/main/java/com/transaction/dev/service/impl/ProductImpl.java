@@ -62,13 +62,20 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO updateProductId(String id, ProductDTO productDTO) {
-        // Optional<ProductDTO> productOptional = repository.findById(id);
-        // if (productOptional.isPresent()) {
+    public void  updateProductId(String id, ProductDTO productDTO) throws ProductCollectionException {
+        Optional<ProductDTO> productOptional = repository.findById(id);
+        if (productOptional.isPresent()) {
+            ProductDTO productUp = productOptional.get();
+            productUp.setUpdatedAt(new Date(System.currentTimeMillis()));
+            productUp.setName(productDTO.getName());
+            productUp.setDescription(productDTO.getDescription());
+            productUp.setPrice(productDTO.getPrice());
+            productUp.setStock(productDTO.getStock());
             
-        // } else {
-        // }
-        return null;
+            repository.save(productUp);
+        } else {
+            throw new ProductCollectionException(ProductCollectionException.NotFoundException(id));
+        }
     }
 
 }

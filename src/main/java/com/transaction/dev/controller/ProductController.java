@@ -62,21 +62,11 @@ public class ProductController {
 
     @PutMapping("/product/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable("id") String id, @RequestBody ProductDTO product) {
-      
-            Optional<ProductDTO> productOptional = repository.findById(id);
-            // return new ResponseEntity<>(service.getSingleProduct(id), HttpStatus.OK);
-            if (productOptional.isPresent()) {
-               ProductDTO productSave = productOptional.get();
-               productSave.setName(product.getName() != null ? product.getName() : productSave.getName());
-               productSave.setDescription(product.getDescription() != null ? product.getDescription() : productSave.getDescription());
-               productSave.setPrice(product.getPrice() != null ? product.getPrice() : productSave.getPrice());
-               productSave.setStock(product.getStock() != null ? product.getStock() : productSave.getStock());
-               productSave.setUpdatedAt(new Date(System.currentTimeMillis()));
-
-               repository.save(productSave);
-               return new ResponseEntity<>(productSave,HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>("product not found with id "+id+"", HttpStatus.NOT_FOUND);
+            try {
+                service.updateProductId(id, product);
+                return new ResponseEntity<>("Success Update Product : " + id, HttpStatus.OK);
+            } catch (ProductCollectionException e) {
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
             }
         
     }
